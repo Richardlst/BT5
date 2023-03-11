@@ -48,21 +48,26 @@ void print(int m, int n, char a[][10])
         cout<<endl;
     }
 }
-void print2(int m, int n, char b[][10], int x, int y, char a[][10])
+void loang(char b[][10], int x, int y, char a[][10], int m, int n)
 {
-    for(int q=x-1; q<=x+1; q++)
-    {
-        for(int k=y-1; k<=y+1; k++)
-        {
-            if(q>=0&&k>=0)
-            {
-                if(domin(q,k,a)==0) b[q][k]=' ';
-                else if(domin(q,k,a)!=100) b[q][k]=char(domin(q, k, a)+'0');
+    if (b[x][y] != '.') return;
+    int d = domin(x, y, a);
+    if (d == 0) {
+    b[x][y] = '_';
+    } else {
+    b[x][y] = char(d + '0');
+    }
+    if (d == 0) {
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i >= 0 && i < m && j >= 0 && j < n) {
+                    loang(b, i, j, a, m, n);
+                }
             }
         }
     }
-    print(m, n, b);
 }
+
 int dem(int m, int n, char b[][10]){
     int cnt=0;
 for(int i=0; i<m; i++){
@@ -90,7 +95,8 @@ int main()
         }
         else
         {
-            print2(m, n, b, x, y, a);
+            loang(b, x, y, a, m, n);
+            print(m,n,b);
             if(dem(m,n,b)==m*n-k)
             {
                 cout<<"You win!";
