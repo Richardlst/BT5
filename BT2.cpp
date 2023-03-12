@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-void khoitao(int m, int n, int k, char a[10][10])
+void khoitao(int m, int n, char a[10][10])
 {
     for(int i=0; i<m; i++)
     {
@@ -10,9 +10,9 @@ void khoitao(int m, int n, int k, char a[10][10])
         }
     }
 }
-void taomatran(int m,int n,int k, char a[][10])
+void taomatran(int m,int n,int k, char a[10][10])
 {
-    khoitao(m, n,k, a);
+    khoitao(m, n, a);
     srand(time(0));
     for(int i=0; i<k; i++)
     {
@@ -37,7 +37,7 @@ int domin(int i, int j, char a[10][10])
     if(a[i][j]=='*') t=100;
     return t;
 }
-void print(int m, int n, char a[][10])
+void print(int m, int n, char a[10][10])
 {
     for(int i=0; i<m; i++)
     {
@@ -48,17 +48,13 @@ void print(int m, int n, char a[][10])
         cout<<endl;
     }
 }
-void loang(char b[][10], int x, int y, char a[][10], int m, int n)
+void loang(char b[10][10], int x, int y, char a[10][10], int m, int n)
 {
-    if (b[x][y] != '.') return;
+	if(b[x][y]!='.') return;
     int d = domin(x, y, a);
     if (d == 0) {
     b[x][y] = '_';
-    } else {
-    b[x][y] = char(d + '0');
-    }
-    if (d == 0) {
-        for (int i = x - 1; i <= x + 1; i++) {
+    for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
                 if (i >= 0 && i < m && j >= 0 && j < n) {
                     loang(b, i, j, a, m, n);
@@ -66,9 +62,12 @@ void loang(char b[][10], int x, int y, char a[][10], int m, int n)
             }
         }
     }
+    else {
+    b[x][y] = char(d + '0');
+    }
 }
 
-int dem(int m, int n, char b[][10]){
+int dem(int m, int n, char b[10][10]){
     int cnt=0;
 for(int i=0; i<m; i++){
     for(int j=0; j<n; j++){
@@ -82,7 +81,7 @@ int main()
     int m, n, k, x, y;
     char a[10][10], b[10][10];
     cin>>m>>n>>k;
-    khoitao(m, n, k, b);
+    khoitao(m, n, b);
     taomatran(m, n, k, a);
     while(1)
     {
